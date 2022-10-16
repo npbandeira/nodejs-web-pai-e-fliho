@@ -1,0 +1,26 @@
+{
+  "name": "sequelize",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "audit": "^0.0.6",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-generator": "^4.2.0",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.24.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "sequelize-cli": "^6.5.1"
+  },
+  "description": ""
+}
