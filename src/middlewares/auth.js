@@ -15,7 +15,7 @@ module.exports = {
 
     const [, token] = authHeader.split(" ");
     console.log(" Token: " + token);
-
+    req.session.user['sadasdf'];
     if (!token) {
       return res.status(400).json({
         erro: true,

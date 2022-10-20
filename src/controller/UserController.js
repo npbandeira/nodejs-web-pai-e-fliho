@@ -1,49 +1,62 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { json } = require("body-parser");
+const Session = require("express-session");
+const swal = require('sweetalert2')
 
 module.exports = {
   async index(req, res) {
     const user = await User.findAll({
       attributes: ["id", "name", "email"],
       order: [["id", "DESC"]],
-    });
-
-    console.log(user);
-
+    })
     return user;
   },
 
   async store(req, res) {
-    let dados = req.body;
-    console.log(dados);
-    dados.senha = await bcrypt.hash(dados.senha, 8);
-
-    await User.create(dados)
-      .then(() => {
-        return res.json({
-          erro: false,
-          mensagem: "Usuário cadastrado com sucesso!",
-        });
+  /*   let erros = []
+    if (!req.body.name || typeof req.body.name === undefined || req.body.name === null) {
+      erros.push({
+        text: "Nome inválido"
       })
-      .catch(() => {
-        return res.status(400).json({
-          erro: true,
-          mensagem: "Erro: Usuário não cadastrado com sucesso!",
-        });
-      });
+    }
+    if (!req.body.senha || typeof req.body.senha === undefined || req.body.senha === null) {
+      erros.push({
+        text: "Senha inválida"
+      })
+    }
+    if (req.body.senha.length < 5) {
+      erros.push({
+        text: "Senha muito pequena"
+      })
+    } */
+      var dados = req.body
+      console.log(dados)
+      dados.senha = await bcrypt.hash(dados.senha, 8);
+      await User.create(dados)
+        .then(() => {
+          res.json(dados)
+          
+        })
+        .catch(() => {
+          res.json({
+            erro: true,
+            mensage: "usuario nao cadastrado"
+          });
+        },
+        )
+
+    
   },
 
   async login(req, res) {
-    console.log(req.body);
+
     const user = await User.findOne({
+
       attributes: ["id", "name", "email", "senha"],
       where: {
         email: req.body.email,
       },
-    });
-
+    })
     if (user === null) {
       return res.status(400).json({
         erro: true,
@@ -58,15 +71,11 @@ module.exports = {
       });
     }
 
-    let token = jwt.sign({ id: user.id }, "D62ST92Y7A6V7K5C6W9ZU6W8KS3", {
-      expiresIn: 600, //10 min
-      // expiresIn: 60, //1 min
-      // expiresIn: "7d", // 7 dia
-    });
+
     return res.json({
       erro: false,
       mensagem: "Login realizado com sucesso",
-      token,
     });
-  },
+
+  }
 };

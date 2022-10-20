@@ -16,10 +16,10 @@ routes.get("/login", (req, res) => {
 routes.get("/cadastro", (req, res) => {
   res.render("cadastrar.html");
 });
-routes.get("/", isFather, async (req, res) => {
+routes.get("/", async (req, res) => {
   await UserController.index()
     .then((user) => {
-      return res.json({
+      return res.status(200).json({
         erro: false,
         user,
         id_usuario_logado: req.userId,
