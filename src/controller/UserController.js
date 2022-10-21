@@ -30,9 +30,9 @@ module.exports = {
     if (user === null) {
       await User.create(dados)
         .then(() => {
-          return  res.json({
-            error:false,
-          mensagem: "Cadastrado com sucesso"
+          return res.json({
+            error: false,
+            mensagem: "Cadastrado com sucesso"
           })
         })
         .catch(() => {
@@ -46,29 +46,29 @@ module.exports = {
     }
   },
 
-async login(req, res) {
+  async login(req, res) {
 
-  const user = await User.findOne({
-    attributes: ["id", "name", "email", "senha"],
-    where: {
-      email: req.body.email,
-    },
-  })
+    const user = await User.findOne({
+      attributes: ["id", "name", "email", "senha"],
+      where: {
+        email: req.body.email,
+      },
+    })
 
-  console.log(user);
-  if (user === null) {
-    return res.status(400).json({
-      erro: true,
-      mensagem: "Erro: Usuário ou senha incorreto",
-    });
-  }
+    console.log(user);
+    if (user === null) {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Usuário ou senha incorreto",
+      });
+    }
 
-  if (!bcrypt.compare(req.body.senha, user.senha)) {
-    return res.status(400).json({
-      erro: true,
-      mensagem: "Erro: Usuário ou a senha incorreta! Senha incorreta!",
-    });
-  }
+    if (!bcrypt.compare(req.body.senha, user.senha)) {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Usuário ou a senha incorreta! Senha incorreta!",
+      });
+    }
 
   }
 };
