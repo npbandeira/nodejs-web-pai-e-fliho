@@ -9,6 +9,8 @@ const flash = require('connect-flash')
 
 
 //config
+//conexexao com o banco de dados
+require("./database");
 
 //CORS
 app.use((req, res, next) => {
@@ -24,6 +26,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
 }));
+
 app.use(flash());
 
 // Middleware 
@@ -34,6 +37,7 @@ app.use((req, res, next)=>{
 })
 //css e assets
 app.use(express.static(path.join(__dirname + "/assets")));
+
 //HTML
 app.set("views", path.join(__dirname, "views"));
 app.engine("html", require("ejs").renderFile);
@@ -43,12 +47,11 @@ app.set("view engine", "html");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//conexexao com o banco de dados
-require("./database");
-
 // Leitura de solicitações json
 app.use(express.json());
+
 // Rotas
 app.use(routes);
+
 // Porta do Servidor
 app.listen(3333);

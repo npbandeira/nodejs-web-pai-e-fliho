@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
+    <script src="/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.all.js"></script>
+    <script src="/js/jquery.js"></script>
     <style>
         .erromsg {
             color: #f30;
@@ -42,12 +45,10 @@
 </head>
 
 <body>
-    <script src="/js/bootstrap.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.all.js"></script>
-    <script src="/js/jquery.js"></script>
-    
-    
-    
+
+
+
+
     <div class="container-fluid bg-fundo bg-login00">
 
         <section>
@@ -69,8 +70,8 @@
                                     class="d-inline-flex bg-white px-4 px-lg-5 py-1 rounded border border-warning border-2 fs-6 fw-bold">
                                     CADASTRE-SE</h5>
                             </div>
-                            <form action="/cadastrar" id="#" method="POST">
-                            <div class="mb-3">
+                            <form action="/cadastrar" id="myForm" method="POST">
+                                <div class="mb-3">
                                     <label for="name" class="form-label fw-bold">Nome de usuario</label>
                                     <input type="text" id="nome" name="name" class="form-control border border-warning"
                                         required>
@@ -131,21 +132,32 @@
             </div>
         </div>
     </footer>
-    
-          <script>
-           $('#myForm').on('submit', function(e){
-               e.preventDefault();
-               $.ajax({
-                   url: "/cadastrar",
-                   method: "POST"
-               }).done(d=>{
-                   console.log
-                   Swal.fire('asdjkha')
-                    
-               })
-           })
-          </script>
- 
+
+    <script>
+        $('#myForm').on('submit', function (e) {
+            let form = "myForm"
+            e.preventDefault();
+            $.ajax({
+                data: $('#' + form).serialize(),
+                url: "/cadastrar",
+                method: "post",
+            }).done(()=>{
+                Swal.fire({
+                    icon:'success',
+                    title: 'Usuario Cadastrado com Sucesso',
+                }).then(() => {
+                    document.location.href = '/login'
+                });
+            }).fail(function (data) {
+                Swal.fire({
+                    icon:'error',
+                    title: 'Email já cadastrado',
+                });
+            })
+        }
+        )
+    </script>
+
 </body>
 
 </html>
