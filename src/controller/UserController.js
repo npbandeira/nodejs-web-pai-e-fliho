@@ -1,15 +1,37 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const Session = require("express-session");
+const session = require("express-session");
 const swal = require('sweetalert2')
 
 module.exports = {
   async index(req, res) {
+    if	(req.session.idUser)	{
+      res.render('home',{
+      session:	req.session,
+      id:	req.session.idUser
+          });
+      }else{
+        res.redirect('/login')
+      };
+
+
+  },
+
+  async list(req, res){
+    if	(req.session.idUser){
     const user = await User.findAll({
       attributes: ["id", "name", "email"],
       order: [["id", "DESC"]],
     })
-    return user;
+
+    return res.json({
+      erro: false,
+      user,
+      id_user: req.session.idUser,
+      })
+    }else{
+      res.redirect('/login')
+    }
   },
 
   async store(req, res) {
@@ -54,21 +76,28 @@ module.exports = {
         email: req.body.email,
       },
     })
-
-    console.log(user);
+    
     if (user === null) {
       return res.status(400).json({
         erro: true,
         mensagem: "Erro: Usuário ou senha incorreto",
       });
-    }
-
-    if (!bcrypt.compare(req.body.senha, user.senha)) {
+    }else if (!bcrypt.compare(req.body.senha, user.senha)) {
       return res.status(400).json({
         erro: true,
         mensagem: "Erro: Usuário ou a senha incorreta! Senha incorreta!",
       });
+    }else{
+      console.log('logou');
+      req.session.idUser	=	user.id;
+      res.redirect('/');
     }
 
+  },
+  
+  async logout(req,res,next){
+    console.log('Logout')
+    req.session.destroy();
+    res.redirect('/login');
   }
 };

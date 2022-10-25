@@ -5,10 +5,11 @@ const bodyParser = require("body-parser");
 const app = express();
 const path = require("path");
 const session = require("express-session");
-const flash = require('connect-flash')
 
 
 //config
+//json config
+app.set('json spaces', 4)
 //conexexao com o banco de dados
 require("./database");
 
@@ -23,18 +24,10 @@ app.use((req, res, next) => {
 // Session 
 app.use(session({
     secret:"picurso",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
 }));
 
-app.use(flash());
-
-// Middleware 
-app.use((req, res, next)=>{
-    res.locals.success_msg = req.flash("Success_MSG");
-    res.locals.error = req.flash("Error_MSG");
-    next();
-})
 //css e assets
 app.use(express.static(path.join(__dirname + "/assets")));
 
