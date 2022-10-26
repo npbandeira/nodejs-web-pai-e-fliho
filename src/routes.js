@@ -30,4 +30,10 @@ routes.post("/logar", UserController.login);
 // Listar Usuarios
 routes.get("/listar", UserController.list);
 
+// Criar Lição
+
+routes.get('/licao/criar', (req, res) =>{
+  res.render('criar_licao.html')
+} )
+
 module.exports = routes;
