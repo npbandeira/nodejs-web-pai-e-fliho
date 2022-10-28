@@ -1,14 +1,23 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require("sequelize");
 
 class Perfil extends Model {
   static init(sequelize) {
-    super.init({
-      perfilname: DataTypes.STRING,
-      perfil_type: DataTypes.STRING,
-    }, {
-      sequelize
-    })
+    super.init(
+      {
+        perfilName: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        perfil_type: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+      },
+      {
+        sequelize,
+      }
+    );
   }
 }
 
-module.exports = User;
+module.exports = Perfil;

@@ -34,6 +34,8 @@ routes.get("/listar", UserController.list);
 
 routes.get('/licao/criar', (req, res) =>{
   res.render('criar_licao.html')
-} )
+})
+
+
 
 module.exports = routes;
