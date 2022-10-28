@@ -3,9 +3,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Perfil', {
+    return queryInterface.createTable("Perfil", {
       perfilName: Sequelize.STRING,
-      perfilTipo: Sequelize.STRING,
+      perfilTipo: { 
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,

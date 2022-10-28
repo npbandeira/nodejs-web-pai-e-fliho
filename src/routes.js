@@ -17,7 +17,9 @@ routes.get("/cadastro", (req, res) => {
 });
 
 // Rotas de Usuario
-routes.get("/", UserController.index);
+routes.get("/", (req, res, next)=>{
+  res.render('home.html')
+});
 
 routes.get("/logout", UserController.logout);
 
@@ -30,12 +32,17 @@ routes.post("/logar", UserController.login);
 // Listar Usuarios
 routes.get("/listar", UserController.list);
 
-// Criar Lição
-
-routes.get('/licao/criar', (req, res) =>{
-  res.render('criar_licao.html')
+// Perfil
+routes.get('/user/perfil', (req,res)=>{
+  res.render('Perfil.html');
 })
 
+// Criar Lição
 
+routes.get('/criar_licao', (req, res) =>{
+  res.render('criar_licao.html')
+})
+// post de criação
+// routes.post('/criar_licao/criar', PerfilController.store)
 
 module.exports = routes;

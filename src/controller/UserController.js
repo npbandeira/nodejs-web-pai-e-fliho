@@ -4,18 +4,18 @@ const session = require("express-session");
 const swal = require('sweetalert2')
 
 module.exports = {
-  async index(req, res) {
-    if	(req.session.idUser)	{
-      res.render('home',{
-      session:	req.session,
-      id:	req.session.idUser
-          });
-      }else{
-        res.redirect('/login')
-      };
+  // async index(req, res) {
+  //   if	(req.session.idUser)	{
+  //     res.render('home',{
+  //     session:	req.session,
+  //     id:	req.session.idUser
+  //         });
+  //     }else{
+  //       res.redirect('/login')
+  //     };
 
 
-  },
+  // },
 
   async list(req, res){
     if	(req.session.idUser){
@@ -76,7 +76,7 @@ module.exports = {
         email: req.body.email,
       },
     })
-    
+    // valida senha do usuarío 
     if (user === null) {
       return res.status(400).json({
         erro: true,
@@ -88,16 +88,17 @@ module.exports = {
         mensagem: "Erro: Usuário ou a senha incorreta! Senha incorreta!",
       });
     }else{
+      s
       console.log('logou');
       req.session.idUser	=	user.id;
-      res.redirect('/');
+      res.redirect('/criar_licao');
     }
 
   },
   
-  async logout(req,res,next){
+  async logout(req,res, next){
     console.log('Logout')
     req.session.destroy();
-    res.redirect('/login');
+    res.redirect('/home');
   }
 };

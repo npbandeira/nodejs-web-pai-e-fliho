@@ -9,7 +9,7 @@ class Perfil extends Model {
           allowNull: false,
         },
         perfil_type: {
-          type: DataTypes.STRING,
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
       },
