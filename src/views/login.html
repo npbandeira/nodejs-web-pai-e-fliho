@@ -1,145 +1,147 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/bootstrap.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/bootstrap.css" />
     <script src="/js/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.all.js"></script>
     <script src="/js/jquery.js"></script>
     <title>Login</title>
     <style>
-        .bg-fund {
-            padding: 0;
-            margin: 0;
-            height: 100vh;
-            width: 100%;
-            position: relative;
-            background-image: cover;
-            background-image: url(/img/bg-login00.svg);
-            background-repeat: no-repeat;
+      .bg-fund {
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        background-image: cover;
+        background-image: url(/img/bg-login00.svg);
+        background-repeat: no-repeat;
+      }
 
-        }
+      .logo {
+        margin-top: 10%;
+        width: 20%;
+        position: absolute;
+        margin-left: 15%;
+        text-align: center;
+      }
 
-        .logo {
-            margin-top: 10%;
-            width: 20%;
-            position: absolute;
-            margin-left: 15%;
-            text-align: center;
+      .botao {
+        margin-top: 1%;
+        margin-left: 0%;
+        text-align: center;
+        width: 50%;
+      }
 
+      .col-12 {
+        margin-top: 7%;
+        position: absolute;
+        width: 20%;
+        left: 50%;
+        transform: translate(-50% -50%);
+      }
 
-        }
+      .card {
+        margin-top: 5%;
+        box-shadow: 3px 6px 8px 3px rgba(100, 100, 100, 0.9);
+        background-color: rgb(184, 175, 236);
+        border-radius: 2%;
+        border: 2px solid;
+      }
 
-        .botao {
-
-            margin-top: 1%;
-            margin-left: 0%;
-            text-align: center;
-            width: 50%;
-        }
-
-        .col-12 {
-
-            margin-top: 7%;
-            position: absolute;
-            width: 20%;
-            left: 50%;
-            transform: translate(-50% -50%);
-
-        }
-
-        .card {
-            margin-top: 5%;
-            box-shadow: 3px 6px 8px 3px rgba(100, 100, 100, 0.9);
-            background-color: rgb(184, 175, 236);
-            border-radius: 2%;
-            border: 2px solid;
-        }
-
-        legend {
-            border: 2px solid black;
-            border-radius: 5px;
-            background-color: rgb(247, 245, 131);
-        }
+      legend {
+        border: 2px solid black;
+        border-radius: 5px;
+        background-color: rgb(247, 245, 131);
+      }
     </style>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
     <div class="container-fluid bg-fund tex-start">
-        <section>
-            <div class="logo text-center pt-2">
-                <img src="/img/Logo_paisFilhos.svg" alt="">
-                <a href="/cadastro">
-                    <button class=" botao btn btn-primary border-dark">Cadastrar-se</button>
-                </a>
-            </div>
-        </section>
-
-        <div class="col-12 col-lg-12">
-            <div class="card pt-5 pb-5">
-                <div class="card-body">
-                    <legend><b>
-                            <H2 class="text-center">LOGIN</H2>
-                        </b> </legend>
-                    <form action="#" method="POST" id="myForm">
-                        <div class="form-group pt-3">
-                            <label class="text-start" for="Usuario"> <b>Email de usuário</b> </label>
-                            <input class="form-control border border-dark" type="email" name="email"
-                                placeholder="Digite seu email">
-                        </div>
-
-                        <div class="form-group pt-4 pb-3">
-                            <label class="text-start" for="senha:"><b>Senha</b></label>
-                            <input class=" form-control border border-dark" type="password" name="senha"
-                                placeholder="Digite sua senha">
-
-                        </div>
-                        <div class="form-group pt-5 pb-5 text-center d-grid gap-2 col-6 mx-auto">
-                            <button type="submit" class="btn btn-primary border-dark">Entrar</button>
-
-                        </div>
-                        <div class="pt-3 text-center">
-                            <a class="text-black" href="">Esqueceu sua senha?</a>
-                        </div>
-
-                    </form>
-
-
-                </div>
-            </div>
-
-
-
-
+      <section>
+        <div class="logo text-center pt-2">
+          <img src="/img/Logo_paisFilhos.svg" alt="" />
+          <a href="/cadastro">
+            <button class="botao btn btn-primary border-dark">
+              Cadastrar-se
+            </button>
+          </a>
         </div>
+      </section>
 
+      <div class="col-12 col-lg-12">
+        <div class="card pt-5 pb-5">
+          <div class="card-body">
+            <legend>
+              <b>
+                <h2 class="text-center">LOGIN</h2>
+              </b>
+            </legend>
+            <form action="#" method="POST" id="myForm">
+              <div class="form-group pt-3">
+                <label class="text-start" for="Usuario">
+                  <b>Email de usuário</b>
+                </label>
+                <input
+                  class="form-control border border-dark"
+                  type="email"
+                  name="email"
+                  placeholder="Digite seu email"
+                />
+              </div>
+
+              <div class="form-group pt-4 pb-3">
+                <label class="text-start" for="senha:"><b>Senha</b></label>
+                <input
+                  class="form-control border border-dark"
+                  type="password"
+                  name="senha"
+                  placeholder="Digite sua senha"
+                />
+              </div>
+              <div
+                class="form-group pt-5 pb-5 text-center d-grid gap-2 col-6 mx-auto"
+              >
+                <button type="submit" class="btn btn-primary border-dark">
+                  Entrar
+                </button>
+              </div>
+              <div class="pt-3 text-center">
+                <a class="text-black" href="">Esqueceu sua senha?</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <footer class="rodape">
-        <!--Início do Rodapé-->
-        <p>Copyright © School Software AM - 2021. Todos os direitos reservados.</p>
+      <!--Início do Rodapé-->
+      <p>
+        Copyright © School Software AM - 2021. Todos os direitos reservados.
+      </p>
     </footer>
     <script>
-        $('#myForm').on('submit', function (e) {
-            let form = "myForm"
-            e.preventDefault();
-            $.ajax({
-                data: $('#' + form).serialize(),
-                url: "/logar",
-                method: "post",
-            }).done(() => {
-                document.location.href = '/';
-            }).fail(() => {
-                Swal.fire("Usuario ou senha Incorreta")
-            })
-        }
-        )
+      $("#myForm").on("submit", function (e) {
+        let form = "myForm";
+        e.preventDefault();
+        $.ajax({
+          data: $("#" + form).serialize(),
+          url: "/logar",
+          method: "post",
+        })
+          .done(() => {
+            document.location.href = "/criar_licao";
+          })
+          .fail(() => {
+            Swal.fire("Usuario ou senha Incorreta");
+          });
+      });
     </script>
-</body>
-
+  </body>
 </html>

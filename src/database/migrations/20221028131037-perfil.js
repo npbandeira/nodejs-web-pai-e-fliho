@@ -4,10 +4,13 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("Perfil", {
-      perfilName: Sequelize.STRING,
-      perfilTipo: { 
+      nome: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      tipo: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       id: {
         type: Sequelize.INTEGER,

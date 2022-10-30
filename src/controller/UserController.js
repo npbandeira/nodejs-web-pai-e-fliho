@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
-const swal = require('sweetalert2')
 
 module.exports = {
   // async index(req, res) {
@@ -14,36 +13,34 @@ module.exports = {
   //       res.redirect('/login')
   //     };
 
-
   // },
 
-  async list(req, res){
-    if	(req.session.idUser){
-    const user = await User.findAll({
-      attributes: ["id", "name", "email"],
-      order: [["id", "DESC"]],
-    })
+  async list(req, res) {
+    if (req.session.idUser) {
+      const user = await User.findAll({
+        attributes: ["id", "name", "email"],
+        order: [["id", "DESC"]],
+      });
 
-    return res.json({
-      erro: false,
-      user,
-      id_user: req.session.idUser,
-      })
-    }else{
-      res.redirect('/login')
+      return res.json({
+        erro: false,
+        user,
+        id_user: req.session.idUser,
+      });
+    } else {
+      res.redirect("/login");
     }
   },
 
   async store(req, res) {
+    let dados = req.body;
 
-    let dados = req.body
-
-    console.log(dados)
+    console.log(dados);
 
     dados.senha = await bcrypt.hash(dados.senha, 8);
 
     const user = await User.findOne({
-      attributes: ["name", "email",],
+      attributes: ["name", "email"],
       where: {
         email: dados.email,
       },
@@ -54,51 +51,48 @@ module.exports = {
         .then(() => {
           return res.json({
             error: false,
-            mensagem: "Cadastrado com sucesso"
-          })
+            mensagem: "Cadastrado com sucesso",
+          });
         })
-        .catch(() => {
-          return console.error("nao cadastrado");
+        .catch((err) => {
+          return res.status(400).json({ mensagem: err });
         });
     } else {
       return res.status(402).json({
         erro: true,
-        mensagem: "Email já cadastrado"
-      })
+        mensagem: "Email já cadastrado",
+      });
     }
   },
 
   async login(req, res) {
-
     const user = await User.findOne({
       attributes: ["id", "name", "email", "senha"],
       where: {
         email: req.body.email,
       },
-    })
-    // valida senha do usuarío 
+    });
+    // valida senha do usuarío
     if (user === null) {
       return res.status(400).json({
         erro: true,
         mensagem: "Erro: Usuário ou senha incorreto",
       });
-    }else if (!bcrypt.compare(req.body.senha, user.senha)) {
+    } else if (!bcrypt.compare(req.body.senha, user.senha)) {
       return res.status(400).json({
         erro: true,
         mensagem: "Erro: Usuário ou a senha incorreta! Senha incorreta!",
       });
-    }else{
-      s
-      console.log('logou');
-      req.session.idUser	=	user.id;
-      res.redirect('/criar_licao');
+    } else {
+      console.log("logou");
+      req.session.idUser = user.id;
+      res.redirect("/criar_licao");
     }
-
   },
-  
-  async logout(req,res, next){
-    console.log('Logout')
+
+  async logout(req, res, next) {
+    console.log("Logout");
     req.session.destroy();
-    res.redirect('/home');
-  }
+    res.redirect("/home");
+  },
 };
