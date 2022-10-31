@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Perfil", {
+    return queryInterface.createTable("perfils", {
       nome: {
         type: Sequelize.STRING,
         allowNull: false,

@@ -1,8 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const UserController = require("./controller/UserController");
+
+
 const User = require("./models/User");
+const Perfil = require('./models/Perfil');
+
+const PerfilController = require('./controller/PerfilController')
+const UserController = require("./controller/UserController");
 
 const routes = express.Router();
 
@@ -36,6 +41,9 @@ routes.get("/listar", UserController.list);
 routes.get('/user/perfil', (req,res)=>{
   res.render('Perfil.html');
 })
+
+routes.get('/user/:user_id/perfil', PerfilController.index);
+routes.post('/user/:user_id/perfil/create', PerfilController.store);
 
 // Criar Lição
 
