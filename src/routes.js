@@ -43,14 +43,17 @@ routes.get('/user/perfil', (req,res)=>{
 })
 
 routes.get('/user/:user_id/perfil', PerfilController.index);
+
 routes.post('/user/:user_id/perfil/create', PerfilController.store);
 
+routes.put('/user/:user_id/perfil/put', PerfilController.update)
+
+routes.delete('/user/:user_id/delete-perfil', PerfilController.delete);
 // Criar Lição
 
 routes.get('/criar_licao', (req, res) =>{
   res.render('criar_licao.html')
 })
-// post de criação
-// routes.post('/criar_licao/criar', PerfilController.store)
+
 
 module.exports = routes;
