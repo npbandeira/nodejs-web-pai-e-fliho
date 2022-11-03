@@ -39,7 +39,7 @@ routes.get("/listar", UserController.list);
 
 // Perfil
 routes.get('/user/perfil', (req,res)=>{
-  res.render('Perfil.html');
+  res.render('perfil.html');
 })
 
 routes.get('/user/:user_id/perfil', PerfilController.index);
