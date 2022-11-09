@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "migrate:up": "npx sequelize-cli db:migrate",
-    "migrate:undo": "npx sequelize-cli db:migrate:undo"
+    "start": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +21,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20",
-    "sequelize-cli": "^6.5.1"
+    "nodemon": "^2.0.20"
   },
   "description": ""
 }
