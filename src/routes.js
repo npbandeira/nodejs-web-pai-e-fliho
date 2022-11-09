@@ -2,55 +2,34 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 
-
-const User = require("./models/User");
-const Perfil = require('./models/Perfil');
-
 const PerfilController = require('./controller/PerfilController')
 const UserController = require("./controller/UserController");
 
 const routes = express.Router();
 
-// Login
-routes.get("/login", (req, res) => {
-  res.render("login.html");
-});
+// // Login
+routes.post("/login", UserController.login);
 
-// Cadastro
-routes.get("/cadastro", (req, res) => {
-  res.render("cadastrar.html");
-});
+// // Cadastro
 
-// Rotas de Usuario
-routes.get("/", (req, res, next)=>{
-  res.render('home.html')
-});
-
-routes.get("/logout", UserController.logout);
-
-// Cadastro de Usuario
 routes.post("/cadastrar", UserController.store);
 
-// Login
-routes.post("/logar", UserController.login);
+// // Rotas de Usuario
+
+// routes.get("/logout", UserController.logout);
 
 // Listar Usuarios
 routes.get("/listar", UserController.list);
 
 // Perfil
-routes.get('/user/perfil', (req,res)=>{
-  res.render('Perfil.html');
-})
+routes.get('/user/:id', PerfilController.index);
 
-routes.get('/user/:user_id/perfil', PerfilController.index);
-routes.post('/user/:user_id/perfil/create', PerfilController.store);
+routes.post('/user/:id', PerfilController.store);
 
-// Criar Lição
+// routes.put('/user/:user_id/perfil/put', PerfilController.update)
 
-routes.get('/criar_licao', (req, res) =>{
-  res.render('criar_licao.html')
-})
-// post de criação
-// routes.post('/criar_licao/criar', PerfilController.store)
+// routes.delete('/user/:user_id/delete-perfil', PerfilController.delete);
+
+
 
 module.exports = routes;

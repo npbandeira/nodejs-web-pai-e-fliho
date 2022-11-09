@@ -3,23 +3,21 @@ const routes = require("./routes");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const app = express();
-const path = require("path");
 const session = require("express-session");
+const { PrismaClient } = require("@prisma/client");
+
 
 
 //config
+
 //json config
+
 app.set('json spaces', 4)
-//conexexao com o banco de dados
-require("./database");
 
 //CORS
-app.use((req, res, next) => {
-    res.append('Access-Control-Allow-Origin', ['*']);
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.append('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
+const option ={
+    origin: "http://localhost:3333"
+}
 
 // Session 
 app.use(session({
@@ -27,14 +25,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
-
-//css e assets
-app.use(express.static(path.join(__dirname + "/assets")));
-
-//HTML
-app.set("views", path.join(__dirname, "views"));
-app.engine("html", require("ejs").renderFile);
-app.set("view engine", "html");
 
 //body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,4 +37,7 @@ app.use(express.json());
 app.use(routes);
 
 // Porta do Servidor
-app.listen(3333);
+const PORT = process.env.PORT || 3333;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil</title>
+  </head>
+  <body>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery.js"></script>
+
+    <h1></h1>
+
+    <div id="licoes"></div>
+
+    <script>
+      $.ajax({
+        method: "GET",
+        url: '/user/1/perfil',
+      }).done(function (msg) {
+        console.log(msg)
+        $('#licoes').text(msg.mensagem)
+      }).fail(function(msg){
+        console.log(msg)
+        $('#licoes').text(msg.responseJSON.mensagem)
+      });
+    </script>
+  </body>
+</html>
