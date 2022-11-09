@@ -16,17 +16,7 @@ module.exports = {
 
     const user = await prisma.user.findUnique({
       where: userId,
-      include:{
-        perfil:{
-           select:{
-            nome: true,
-            tipo: true,
-           }
-            
-        }
-      }
 
-    
     });
 
     if (!user) {
