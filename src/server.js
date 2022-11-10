@@ -4,9 +4,6 @@ const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const app = express();
 const session = require("express-session");
-const { PrismaClient } = require("@prisma/client");
-
-
 
 //config
 

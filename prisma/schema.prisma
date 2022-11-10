@@ -21,11 +21,11 @@ model User {
 }
 
 model Perfil {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(cuid())
   nome       String
   tipo       Int
   userId     String
   created_at DateTime @default(now())
 
-  dono        User @relation(fields: [userId], references: [id])
+  dono User @relation(fields: [userId], references: [id])
 }
