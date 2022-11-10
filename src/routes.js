@@ -26,9 +26,11 @@ routes.get('/user/:id', PerfilController.index);
 
 routes.post('/user/:id', PerfilController.store);
 
-// routes.put('/user/:user_id/perfil/put', PerfilController.update)
+routes.get('/perfil/:perfilId', PerfilController.find)
 
-// routes.delete('/user/:user_id/delete-perfil', PerfilController.delete);
+routes.put('/user/:userId/perfil/:perfilId', PerfilController.update)
+
+routes.delete('/user/:userId/perfil/:perfilId', PerfilController.delete)
 
 
 

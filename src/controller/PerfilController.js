@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs/dist/bcrypt");
+const { name } = require("ejs");
 const { z, string, bigint, number } = require("zod");
 
 const prisma = new PrismaClient({
@@ -16,7 +17,6 @@ module.exports = {
 
     const user = await prisma.user.findUnique({
       where: userId,
-
     });
 
     if (!user) {
@@ -29,12 +29,21 @@ module.exports = {
       where: {
         userId: userId.id,
       },
-      
+      include: {
+        dono: {
+          select: {
+            id: true,
+            name: true
+
+          }
+        }
+      }
+
     });
 
     user.senha = undefined;
 
-    return response.json(user);
+    return response.json(perfil);
   },
 
   async store(request, response) {
@@ -51,7 +60,8 @@ module.exports = {
 
     const user = await prisma.user.findUnique({
       where: userId,
-    });
+    })
+
     if (!user) {
       return response.status(401).json({
         mensagem: "User not found",
@@ -65,88 +75,88 @@ module.exports = {
         tipo: perfilBody.type,
         userId: userId.id
       },
-       
+
     });
 
     return response.json(perfil);
-    //     const user = await User.findByPk(user_id);
 
-    //     if (!user) {
-    //       return res.status(400).json({
-    //         mensagem: "Usuario não encontrado",
-    //       });
-    //     }
-    //     const perfil = await Perfil.create({ nome, tipo, user_id });
-
-    //     return res.json(perfil);
-    //   },
   },
-  //   async store(req, res, next) {
 
-  //     const { user_id } = req.params;
-  //     const { nome, tipo } = req.body;
+  async find(request, response) {
 
-  //     const user = await User.findByPk(user_id);
+    // implementar token 
 
-  //     if (!user) {
-  //       return res.status(400).json({
-  //         mensagem: "Usuario não encontrado",
-  //       });
-  //     }
-  //     const perfil = await Perfil.create({ nome, tipo, user_id });
+    const perfilRequestBody = z.object({
+      name: string().optional(),
+    });
+    const perfilInfoBody = perfilRequestBody.parse(request.body);
 
-  //     return res.json(perfil);
-  //   },
 
-  //   async update(req, res, next) {
-  //     const { user_id } = req.params;
-  //     const { id, nome } = req.body;
+    const perfil = await prisma.perfil.findMany({
+      where: {
+        nome: {
+          contains: perfilInfoBody.name
+        }
+      }
+    })
 
-  //     const user = await User.findByPk(user_id);
-  //     if (!user) {
-  //       return res.status(400).json({
-  //         mensagem: "Usuario não encontrado",
-  //       });
-  //     }
-  //     // if (perfil <= 0) {
-  //     //   return res.json({
-  //     //     mensagem: "Adcione Um perfil",
-  //     //   });
-  //     // }
+    return response.json(perfil)
+  },
 
-  //     const perfil = await Perfil.update(
+  async update(request, response) {
 
-  //       {
-  //         id,
-  //         nome,
-  //       },
-  //       {
-  //         where: {
-  //           id: id,
-  //         },
-  //       }
-  //     );
+    console.log(request.params)
 
-  //     return res.json(perfil);
-  //   },
+    const perfilRequestParams = z.object({
 
-  //   async delete(req, res, next) {
-  //     const { user_id } = req.params;
-  //     const { id } = req.body;
+      perfilId: string(),
+      userId: string().cuid(),
+    });
+    const perfilRequestBody = z.object({
+      name: string(),
+    });
 
-  //     const user = await User.findByPk(user_id);
-  //     if (!user) {
-  //       return res.status(400).json({
-  //         mensagem: "Usuario não encontrado",
-  //       });
-  //     }
-  //     const perfil = await Perfil.destroy({
-  //       where: {
-  //         id: id,
-  //       },
-  //     });
+    const perfilInfoParams = perfilRequestParams.parse(request.params)
+    const perfilInfoBody = perfilRequestBody.parse(request.body);
 
-  //     return res.json(perfil);
-  //   },
-  // };
+
+    const perfil = await prisma.perfil.update({
+      where: {
+        id: parseInt(perfilInfoParams.perfilId),
+      },
+
+      data: {
+        nome: perfilInfoBody.name
+      }
+    })
+
+    return response.json(perfil)
+  },
+
+  async delete(request, response) {
+
+    const perfilRequestParams = z.object({
+      perfilId: string(),
+      userId: string().cuid(),
+    })
+
+    const perfilInfoParams = perfilRequestParams.parse(request.params)
+
+    const perfilFind = await prisma.perfil.findUnique({
+      where: {
+        id: parseInt(perfilInfoParams.perfilId)
+      }
+    })
+    if (!perfilFind){
+      return response.json({
+        mensagem: "Perfil não encotrado (delete)"
+      })
+    }
+    const perfil = await prisma.perfil.delete({
+      where: {
+        id: parseInt(perfilInfoParams.perfilId),
+      },
+    })
+    return response.json(perfil)
+  }
 };
