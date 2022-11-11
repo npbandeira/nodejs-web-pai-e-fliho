@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs/dist/bcrypt");
+const { name } = require("ejs");
 const { z, string, bigint, number } = require("zod");
 
 const prisma = new PrismaClient({
@@ -33,11 +34,24 @@ module.exports = {
       where: {
         userId: userId.id,
       },
+<<<<<<< HEAD
+      include: {
+        dono: {
+          select: {
+            id: true,
+            name: true
+
+          }
+        }
+      }
+
+=======
+>>>>>>> 0f8faee5c904acc54271741f88e36fd46b66ed5b
     });
 
     user.senha = undefined;
 
-    return response.json(user);
+    return response.json(perfil);
   },
 
   async store(request, response) {
@@ -54,7 +68,8 @@ module.exports = {
 
     const user = await prisma.user.findUnique({
       where: userId,
-    });
+    })
+
     if (!user) {
       return response.status(401).json({
         mensagem: "User not found",
@@ -67,6 +82,92 @@ module.exports = {
         tipo: perfilBody.type,
         userId: userId.id,
       },
+<<<<<<< HEAD
+
+    });
+
+    return response.json(perfil);
+
+  },
+
+  async find(request, response) {
+
+    // implementar token 
+
+    const perfilRequestBody = z.object({
+      name: string().optional(),
+    });
+    const perfilInfoBody = perfilRequestBody.parse(request.body);
+
+
+    const perfil = await prisma.perfil.findMany({
+      where: {
+        nome: {
+          contains: perfilInfoBody.name
+        }
+      }
+    })
+
+    return response.json(perfil)
+  },
+
+  async update(request, response) {
+
+    console.log(request.params)
+
+    const perfilRequestParams = z.object({
+
+      perfilId: string(),
+      userId: string().cuid(),
+    });
+    const perfilRequestBody = z.object({
+      name: string(),
+    });
+
+    const perfilInfoParams = perfilRequestParams.parse(request.params)
+    const perfilInfoBody = perfilRequestBody.parse(request.body);
+
+
+    const perfil = await prisma.perfil.update({
+      where: {
+        id: parseInt(perfilInfoParams.perfilId),
+      },
+
+      data: {
+        nome: perfilInfoBody.name
+      }
+    })
+
+    return response.json(perfil)
+  },
+
+  async delete(request, response) {
+
+    const perfilRequestParams = z.object({
+      perfilId: string(),
+      userId: string().cuid(),
+    })
+
+    const perfilInfoParams = perfilRequestParams.parse(request.params)
+
+    const perfilFind = await prisma.perfil.findUnique({
+      where: {
+        id: parseInt(perfilInfoParams.perfilId)
+      }
+    })
+    if (!perfilFind){
+      return response.json({
+        mensagem: "Perfil não encotrado (delete)"
+      })
+    }
+    const perfil = await prisma.perfil.delete({
+      where: {
+        id: parseInt(perfilInfoParams.perfilId),
+      },
+    })
+    return response.json(perfil)
+  }
+=======
     });
 
     return response.json(perfil);
@@ -158,4 +259,5 @@ module.exports = {
     //   },
     // };
   },
+>>>>>>> 0f8faee5c904acc54271741f88e36fd46b66ed5b
 };
