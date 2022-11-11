@@ -21,11 +21,29 @@ model User {
 }
 
 model Perfil {
-  id         String   @id @default(cuid())
+  id         String   @id @unique @default(cuid())
   nome       String
   tipo       Int
   userId     String
   created_at DateTime @default(now())
 
-  dono User @relation(fields: [userId], references: [id])
+  dono         User           @relation(fields: [userId], references: [id])
+  perfil_admin perfil_admin[]
+}
+
+model perfil_admin {
+  perfilId           String @id @default(cuid())
+  grau_de_parentesco String
+  pai                Perfil @relation(fields: [perfilId], references: [id])
+
+  filho perfil_gamer[]
+}
+
+model perfil_gamer {
+  id         String @id @default(cuid())
+  perfilId   String @unique
+  grau_serie String
+
+  responsavel perfil_admin @relation(fields: [perfilId], references: [perfilId])
+
 }
