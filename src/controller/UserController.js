@@ -7,6 +7,7 @@ const prisma = new PrismaClient({
 });
 
 module.exports = {
+
   async list(request, response) {
     const users = await prisma.user.findMany();
 
@@ -31,7 +32,6 @@ module.exports = {
     })
 
     if(!user){
-      
     const userCreate =  await prisma.user.create({
         data:{
           name: userInfo.name,
@@ -102,6 +102,5 @@ module.exports = {
     //     req.session.idUser = user.id;
     //     res.redirect("/criar_licao");
     //   }
-    }
-
+  }
   }
