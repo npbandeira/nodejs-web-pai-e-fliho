@@ -34,7 +34,6 @@ module.exports = {
       where: {
         userId: userId.id,
       },
-<<<<<<< HEAD
       include: {
         dono: {
           select: {
@@ -45,8 +44,6 @@ module.exports = {
         }
       }
 
-=======
->>>>>>> 0f8faee5c904acc54271741f88e36fd46b66ed5b
     });
 
     user.senha = undefined;
@@ -82,7 +79,6 @@ module.exports = {
         tipo: perfilBody.type,
         userId: userId.id,
       },
-<<<<<<< HEAD
 
     });
 
@@ -167,97 +163,4 @@ module.exports = {
     })
     return response.json(perfil)
   }
-=======
-    });
-
-    return response.json(perfil);
-  },
-
-  async update(request, response) {
- 
-    const userRequestParams = z.object({
-      id: string().cuid(),
-    });
-    const perfilRequestBody = z.object({
-      name: string(),
-      type: number().int().min(0).max(1),
-    });
-
-    const userInfo = userRequestParams.parse(request.params)
-
-    const perfilInfo = perfilRequestBody.parse(request.body)
-
-    const user = await prisma.user.findUnique({
-      where: {
-        id: userInfo.id,
-      }
-    })
-    if(!user){
-      return response.status(401).json({
-        mensagem: "Usuario não encontrado",
-      });
-    }
-    const perfil = await prisma.perfil.update({
-      where:{
-        id: request.params.id
-      },
-      data: {
-        nome: perfilInfo.name,
-        tipo: perfilInfo.tipo,
-      }
-    })
-
-    if(!perfil){
-      return response.status(101).json({
-        mensagem: "Cadastre um perfil",
-      });
-
-    }
-    
-    return response.json(user)
-    
-
-    //     // if (perfil <= 0) {
-    //     //   return res.json({
-    //     //     mensagem: "Adcione Um perfil",
-    //     //   });
-    //     // }
-
-    //     const perfil = await Perfil.update(
-
-    //       {
-    //         id,
-    //         nome,
-    //       },
-    //       {
-    //         where: {
-    //           id: id,
-    //         },
-    //       }
-    //     );
-
-    //     return res.json(perfil);
-    //   },
-
-    //   async delete(req, res, next) {
-    //     const { user_id } = req.params;
-    //     const { id } = req.body;
-
-    //     const user = await User.findByPk(user_id);
-    //     if (!user) {
-    //       return res.status(400).json({
-    //         mensagem: "Usuario não encontrado",
-    //       });
-    //     }
-    //     const perfil = await Perfil.destroy({
-    //       where: {
-    //         id: id,
-    //       },
-    //     });
-
-    //     return res.json(perfil);
-    //   },
-    // };
-  },
->>>>>>> 0f8faee5c904acc54271741f88e36fd46b66ed5b
 };
