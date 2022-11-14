@@ -32,18 +32,46 @@ model Perfil {
 }
 
 model perfil_admin {
-  perfilId           String @id @default(cuid())
+  perfilId           String         @unique @default(cuid())
   grau_de_parentesco String
-  pai                Perfil @relation(fields: [perfilId], references: [id])
-
-  filho perfil_gamer[]
+  Perfil             Perfil         @relation(fields: [perfilId], references: [id])
+  filho              perfil_gamer[]
+  Licao              Licao[]
 }
 
 model perfil_gamer {
-  id         String @id @default(cuid())
   perfilId   String @unique
   grau_serie String
 
   responsavel perfil_admin @relation(fields: [perfilId], references: [perfilId])
+  Licao       Licao[]
+}
 
+model Disciplina {
+  id    Int     @id @default(autoincrement())
+  nome  String  @unique
+  Licao Licao[]
+}
+
+model Modelo {
+  id    Int     @id @default(autoincrement())
+  nome  String  @unique
+  Licao Licao[]
+}
+
+model Licao {
+  id              String  @id @default(cuid())
+  nome            String
+  nivel           Int
+  id_modelo       Int
+  id_disciplina   Int
+  nota            String?
+  id_perfil_admin String
+  id_perfil_gamer String
+
+  Pai   perfil_admin @relation(fields: [id_perfil_admin], references: [perfilId])
+  Filho perfil_gamer @relation(fields: [id_perfil_gamer], references: [perfilId])
+
+  Modelo     Modelo     @relation(fields: [id_modelo], references: [id])
+  Disciplina Disciplina @relation(fields: [id_disciplina], references: [id])
 }
