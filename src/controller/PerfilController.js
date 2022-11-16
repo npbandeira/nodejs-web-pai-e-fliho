@@ -1,7 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcryptjs/dist/bcrypt");
-const { name } = require("ejs");
-const { z, string, bigint, number } = require("zod");
+const { z, string, number } = require("zod");
 
 const prisma = new PrismaClient({
   log: ["query", "warn", "error"],
@@ -32,12 +30,11 @@ module.exports = {
 
     const perfil = await prisma.perfil.findMany({
       where: {
-        userId: userId.id,
+        userId: user.id,
       },
       include: {
         dono: {
           select: {
-            id: true,
             name: true
 
           }
@@ -53,13 +50,12 @@ module.exports = {
 
   async store(request, response) {
     const userRequestParams = z.object({
-      id: string().cuid(),
+      id: string(),
     });
     const perfilRequestBody = z.object({
       name: string(),
       type: number().int().min(0).max(1),
     });
-    console.log(request.params);
     const userId = userRequestParams.parse(request.params);
     const perfilBody = perfilRequestBody.parse(request.body);
 
@@ -108,8 +104,6 @@ module.exports = {
   },
 
   async update(request, response) {
-
-    console.log(request.params)
 
     const perfilRequestParams = z.object({
 

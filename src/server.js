@@ -1,9 +1,10 @@
 const express = require("express");
 const routes = require("./routes");
+const cors = require("cors");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const app = express();
-const session = require("express-session");
+const jwt = require("jsonwebtoken");
 
 //config
 
@@ -12,16 +13,10 @@ const session = require("express-session");
 app.set('json spaces', 4)
 
 //CORS
-const option ={
-    origin: "http://localhost:3333"
-}
+app.use(cors())
 
-// Session 
-app.use(session({
-    secret:"picurso",
-    resave: false,
-    saveUninitialized: false,
-}));
+// JWT
+
 
 //body-parser
 app.use(bodyParser.urlencoded({ extended: false }));

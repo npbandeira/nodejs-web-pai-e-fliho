@@ -8,7 +8,7 @@ const UserController = require("./controller/UserController");
 const routes = express.Router();
 
 // // Login
-routes.post("/login", UserController.login);
+routes.post("/login",UserController.login);
 
 // // Cadastro
 
@@ -26,11 +26,9 @@ routes.get('/user/:id', PerfilController.index);
 
 routes.post('/user/:id', PerfilController.store);
 
-routes.get('/perfil/:perfilId', PerfilController.find)
+routes.put('/perfil/:id', PerfilController.update)
 
-routes.put('/user/:userId/perfil/:perfilId', PerfilController.update)
-
-routes.delete('/user/:userId/perfil/:perfilId', PerfilController.delete)
+routes.delete('/user/:id/perfil/:perfilid', PerfilController.delete);
 
 
 

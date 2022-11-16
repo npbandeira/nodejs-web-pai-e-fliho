@@ -1,6 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs/dist/bcrypt");
 const { z } = require("zod")
+const jwt = require('jsonwebtoken')
+
 
 const prisma = new PrismaClient({
   log: ["query", "warn", "error"],
@@ -40,7 +42,9 @@ module.exports = {
         }
       })
       userCreate.senha = undefined
-      return response.json(userCreate);
+      return response.status(200).json({ 
+        mensagem: "Usuario Cadastrado com Sucesso"
+      });
     }
 
     return response.status(401).json({
@@ -52,7 +56,7 @@ module.exports = {
 
     const userRequest = z.object({
       email: z.string().email(),
-      senha: z.string().min(8)
+      senha: z.string()
     })
 
     const userInfo = userRequest.parse(request.body);
@@ -69,38 +73,12 @@ module.exports = {
     }
     if (!await bcrypt.compare( userInfo.senha, userSchema.senha)){
       return response.status(401).json({
-        mensagem: "Senha Incorreta"
+        mensagem: "Usuário ou senha incorreta"
       })
     }
-
-    const user = userSchema.id
-
-    return response.json({
-     user
+    
+    return response.status(201).json({
+     id: userSchema.id
     })
-
-    // async login(req, res) {
-    //   const user = await User.findOne({
-    //     attributes: ["id", "name", "email", "senha"],
-    //     where: {
-    //       email: req.body.email,
-    //     },
-    //   });
-    //   // valida senha do usuarío
-    //   if (user === null) {
-    //     return res.status(400).json({
-    //       erro: true,
-    //       mensagem: "Erro: Usuário ou senha incorreto",
-    //     });
-    //   } else if (!bcrypt.compare(req.body.senha, user.senha)) {
-    //     return res.status(400).json({
-    //       erro: true,
-    //       mensagem: "Erro: Usuário ou a senha incorreta! Senha incorreta!",
-    //     });
-    //   } else {
-    //     console.log("logou");
-    //     req.session.idUser = user.id;
-    //     res.redirect("/criar_licao");
-    //   }
   }
   }
